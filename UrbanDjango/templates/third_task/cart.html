@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Корзина</h1>
+    {% if request.session.cart %}
+        <p>Вы добавили в корзину следующие игры(у):</p>
+        <ul>
+            {% for item, count in request.session.cart.items %}
+                <li>
+                    {{ item }}
+                    {% if count > 1 %}
+                        ({{ count }})
+                    {% endif %}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ваша корзина пуста.</p>
+    {% endif %}
+    <a href="{% url 'main' %}"><button>Вернуться обратно на главную страницу
+</button></a>
+</body>
+</html>

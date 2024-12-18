@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+</head>
+<body>
+    <h1>Добро пожаловать в магазин</h1>
+    <p>Ниже представлен список игр для покупки</p>
+    <ul>
+            <form method="post" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                    {% for key, value in data.items %}
+                        <li><button type="submit" name="key" value="{{ key }}">{{ key }}</button></li>
+                    {% endfor %}
+            </form>
+    </ul>
+<a href="{% url 'main' %}"><button>Вернуться обратно на главную страницу</button></a>
+</body>
+</html>
