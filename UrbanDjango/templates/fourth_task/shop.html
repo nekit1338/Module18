@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'menu.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин</title>
+</head>
+<body>
+{% block pagename %}<h1>Добро пожаловать в магазин</h1>{% endblock %}
+{% block menu %}
+{{ block.super }}
+{% endblock %}
+{% block content %}
+    <p>Ниже представлен список игр для покупки</p>
+    <ul>
+            <form method="post" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                    {% for game in data.games %}
+                        <li>
+                            <button type="submit" name="game" value="{{ game }}">{{ game }}</button>
+                        </li>
+                    {% endfor %}
+            </form>
+    </ul>
+<a href="{% url 'main' %}"><button>Вернуться обратно на главную страницу</button></a>
+{% endblock %}
+</body>
+</html>
