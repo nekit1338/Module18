@@ -25,6 +25,7 @@
     {% else %}
         <p>Ваша корзина пуста.</p>
     {% endif %}
+    <a href="{% url 'clear_cart' %}"><button>Очистить корзину</button></a>
     <a href="{% url 'main' %}"><button>Вернуться обратно на главную страницу
 </button></a>
 {% endblock %}

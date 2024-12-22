@@ -26,22 +26,6 @@ data = {
 }
 
 
-#  def add_to_cart(request):
-#      if request.method == 'POST':
-#          try:
-#              selected_index = int(request.POST.get('index'))
-#              if 0 <= selected_index < len(data['games']):
-#                  cart = request.session.get('cart', {})
-#                  game_name = data['games'][selected_index]
-#                  cart[game_name] = cart.get(game_name, 0) + 1
-#                  request.session['cart'] = cart
-#                  return redirect('cart')
-#              else:
-#                  return HttpResponse("Неверный индекс игры")
-#          except (ValueError, TypeError):
-#              return HttpResponse("Некорректный запрос")
-#      return HttpResponse("Неверный метод запроса")
-
 def add_to_cart(request):
     if request.method == 'POST':
         try:
@@ -56,3 +40,10 @@ def add_to_cart(request):
         except (ValueError, TypeError):
             return HttpResponse("Некорректный запрос")
     return HttpResponse("Неверный метод запроса")
+
+
+def clear_cart(request):
+    if 'cart' in request.session:
+        del request.session['cart']
+        request.session.modified = True
+    return redirect('cart')
