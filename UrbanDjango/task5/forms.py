@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class UserRegister(forms.Form):
@@ -7,8 +7,14 @@ class UserRegister(forms.Form):
     password = forms.CharField(label='Введите пароль', widget=forms.PasswordInput, min_length=8)
     repeat_password = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput, min_length=8)
     age = forms.IntegerField(label='Введите свой возраст',
-                             validators=[MinValueValidator(18, message="Вам должно быть не менее 18 лет")],
-                             min_value=18)
+                             validators=[
+                                 MinValueValidator(18, message="Вам должно быть не менее 18 лет"),
+                                 MaxValueValidator(120, message="Возраст не может быть больше 120 лет"),
+                             ],
+                             min_value=18,
+                             max_value=120,
+                             widget=forms.TextInput(attrs={'maxlength': '3'})
+                             )
 
     def clean_age(self):
         age = self.cleaned_data['age']
