@@ -22,6 +22,13 @@ class UserRegister(forms.Form):
             raise forms.ValidationError('Вы должны быть старше 18')
         return age
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        users = ['ivan', 'petr', 'sidor']
+        if username in users:
+            raise forms.ValidationError("Пользователь с таким именем уже существует.")
+        return username    
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
