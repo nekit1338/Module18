@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Магазин</title>
+    <style>
+        .game-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .game-info {
+            flex-grow: 1;
+        }
+    </style>
 </head>
 <body>
 {% block pagename %}<h1>Добро пожаловать в магазин</h1>{% endblock %}
@@ -13,14 +24,16 @@
 {% block content %}
     <p>Ниже представлен список игр для покупки</p>
     <ul>
-            <form method="post" action="{% url 'add_to_cart' %}">
-                {% csrf_token %}
-                    {% for game in data.games %}
-                        <li>
-                            <button type="submit" name="game" value="{{ game }}">{{ game }}</button>
-                        </li>
-                    {% endfor %}
-            </form>
+        {% for game in games %}
+            <li>
+                <form method="post" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                    <div class="game-item">
+                        <span class="game-info"> {{ game.title }} | {{ game.description }}. Стоимость: {{ game.cost }}</span> <button type="submit" name="game" value="{{ game.title }}">Купить</button>
+                    </div>
+                </form>
+            </li>
+        {% endfor %}
     </ul>
 <a href="{% url 'main' %}"><button>Вернуться обратно на главную страницу</button></a>
 {% endblock %}
